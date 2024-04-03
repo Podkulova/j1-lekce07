@@ -57,7 +57,7 @@ class SvatkyTest {
     void getSeznamJmen() {
         //TODO Zkontrolovat, že seznam jmen má správný počet položek.
         Svatky svatky = new Svatky();
-        assertEquals(37, svatky.getPocetJmen());
+        assertEquals(37, svatky.getSeznamJmen().size());
 
     }
 
@@ -68,9 +68,15 @@ class SvatkyTest {
     void pridatSvatekDenMesicInt() {
         // Otestuje, že je jméno v seznamu svátků a že má přiřazen správný den
         Svatky svatky = new Svatky();
-        assertTrue(svatky.jeVSeznamu("Filip"));
-        assertEquals(26, svatky.vratKdyMaSvatek("Filip").getDayOfMonth());
-        assertEquals(5, svatky.vratKdyMaSvatek("Filip").getMonthValue());
+        String expectedName = "Filip";
+        MonthDay expectedDate = MonthDay.of(5, 26);
+
+        svatky.pridejSvatek("Filip", 26, 5);
+        boolean isAdded = svatky.jeVSeznamu(expectedName);
+
+        assertTrue(isAdded);
+        assertEquals(expectedDate, svatky.vratKdyMaSvatek(expectedName));
+
     }
 
     /**
@@ -81,7 +87,7 @@ class SvatkyTest {
         // Otestuje, že je jméno v seznamu svátků a že má přiřazen správný den
         Svatky svatky = new Svatky();
 
-        svatky.pridejSvatek("Adam", 2,12);
+        svatky.pridejSvatek("Adam", 2,Month.DECEMBER);
         assertEquals(2, svatky.vratKdyMaSvatek("Adam").getDayOfMonth());
 
     }
@@ -96,6 +102,7 @@ class SvatkyTest {
         assertTrue(svatky.jeVSeznamu("Kamila"));
 
         // ověření, že svátek má správný den
+        svatky.pridejSvatek("Kamila", MonthDay.of(Month.MAY, 31));
         assertEquals(31, svatky.vratKdyMaSvatek("Kamila").getDayOfMonth());
     }
 
