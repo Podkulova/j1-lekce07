@@ -87,8 +87,15 @@ class SvatkyTest {
         // Otestuje, že je jméno v seznamu svátků a že má přiřazen správný den
         Svatky svatky = new Svatky();
 
+        assertFalse(svatky.jeVSeznamu("Adam"));
+
         svatky.pridejSvatek("Adam", 2,Month.DECEMBER);
+
+        assertTrue(svatky.jeVSeznamu("Adam"));
+
         assertEquals(2, svatky.vratKdyMaSvatek("Adam").getDayOfMonth());
+
+        assertEquals(Month.DECEMBER, svatky.vratKdyMaSvatek("Adam").getMonth());
 
     }
 
@@ -99,11 +106,13 @@ class SvatkyTest {
     void prridatSvatekMonthDay() {
         //TODO Otestuje, že je jméno v seznamu svátků a že má přiřazen správný den
         Svatky svatky = new Svatky();
-        assertTrue(svatky.jeVSeznamu("Kamila"));
+        assertFalse(svatky.jeVSeznamu("Dáša"));
 
         // ověření, že svátek má správný den
-        svatky.pridejSvatek("Kamila", MonthDay.of(Month.MAY, 31));
-        assertEquals(31, svatky.vratKdyMaSvatek("Kamila").getDayOfMonth());
+        svatky.pridejSvatek("Dáša", MonthDay.of(Month.DECEMBER, 20));
+        assertEquals(20, svatky.vratKdyMaSvatek("Dáša").getDayOfMonth());
+
+        assertEquals("DECEMBER", svatky.vratKdyMaSvatek("Dáša").getMonth().name());
     }
 
     /**
